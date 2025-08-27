@@ -12,7 +12,7 @@ resource "google_compute_subnetwork" "subnet" {
   network       = google_compute_network.vpc.id
 
   secondary_ip_range {
-    range_name    = "docker-ipvlan-range"
+    range_name    = var.dock_range_name
     ip_cidr_range = var.cidrdock
   }
 }
