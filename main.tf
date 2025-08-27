@@ -39,7 +39,7 @@ resource "google_compute_firewall" "allow_icmp_internal" {
   priority    = 1000
   description = "Allow ICMP between subnets"
 
-  source_ranges = ["10.0.0.0/8"]
+  source_ranges = ["10.0.0.0/8", "192.168.0.0/16"]
   target_tags   = ["docker-host"]
 
   allow {
@@ -55,7 +55,7 @@ resource "google_compute_firewall" "allow_tcp_80_443_internal" {
   priority    = 1000
   description = "Allow TCP ports 80 and 443 between subnets"
 
-  source_ranges = ["10.0.0.0/8"]
+  source_ranges = ["10.0.0.0/8", "192.168.0.0/16"]
   target_tags   = ["docker-host"]
 
   allow {
