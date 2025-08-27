@@ -33,6 +33,7 @@ resource "google_compute_firewall" "egress443" {
 
 module "subnet1" {
   source = "./modules/subnet"
+  name = "subnet1"
   network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.10.0/24"
   cidrdock   = "192.168.100.0/24"
@@ -42,7 +43,8 @@ module "subnet1" {
 
 module "subnet2" {
   source = "./modules/subnet"
-   network_self_link = google_compute_network.vpcdocker.self_link
+  name = "subnet2"
+  network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.20.0/24"
   cidrdock   = "192.168.200.0/24"
   region = var.region
