@@ -52,8 +52,8 @@ module "subnet2" {
 module "vm1" {
   source         = "./modules/vm"
   name           = "vm-1"
-  network_name   = module.vpc1.network_name
-  subnet_name    = module.vpc1.subnet_name
+  network_name = google_compute_network.vpcdocker.name
+  subnet_name  = module.subnet1.subnet_name
   zone           = var.zone
   startup_script = file("scripts/startup_vm1.sh")
   alias_ip_range      = "192.168.100.0/24"
@@ -63,8 +63,8 @@ module "vm1" {
 module "vm2" {
   source         = "./modules/vm"
   name           = "vm-2"
-  network_name   = module.vpc2.network_name
-  subnet_name    = module.vpc2.subnet_name
+  network_name = google_compute_network.vpcdocker.name
+  subnet_name  = module.subnet2.subnet_name
   zone           = var.zone
   startup_script = file("scripts/startup_vm2.sh")
   alias_ip_range      = "192.168.200.0/24"
