@@ -21,7 +21,7 @@ resource "google_compute_firewall" "iap_ssh" {
 }
 
 resource "google_compute_firewall" "egress443" {
-  name    = egress-443-vpc
+  name    = "egress-443-vpc"
   network_self_link = google_compute_network.vpcdocker.self_link
   direction = "EGRESS"
   allow {
