@@ -3,7 +3,7 @@ resource "google_compute_subnetwork" "subnet" {
   name          = "${var.name}-subnet"
   ip_cidr_range = var.cidr
   region        = var.region
-  network       = google_compute_network.vpc.id
+  network = var.network_self_link
 
   secondary_ip_range {
     range_name    = var.dock_range_name
@@ -14,7 +14,7 @@ resource "google_compute_subnetwork" "subnet" {
 
 resource "google_compute_router" "router" {
   name    = "${var.name}-router"
-  network = google_compute_network.vpc.name
+  network = var.network_self_link
   region  = var.region
 }
 
