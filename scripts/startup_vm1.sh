@@ -19,3 +19,5 @@ docker network create -d ipvlan   --subnet=192.168.100.0/24   --gateway=192.168.
 
 # Run container with static IP
 docker run -d --net=ipvlan-net --ip=192.168.100.10 nginx
+
+ip route add 192.168.100.0/24 dev $PARENT_IF
