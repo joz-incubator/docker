@@ -42,30 +42,3 @@ output "network_name" {
 output "subnet_name" {
   value = google_compute_subnetwork.subnet.name
 }
-
-resource "google_compute_firewall" "iap_ssh" {
-  name    = var.iap_firewall_name
-  network = google_compute_network.vpc.name
-
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-
-  source_ranges = ["35.235.240.0/20"]
-  target_tags   = ["iap-ssh"]
-}
-
-resource "google_compute_firewall" "egress443" {
-  name    = var.egress_firewall_name
-  network = google_compute_network.vpc.name
-
-  direction = "EGRESS"
-
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
-
-  destination_ranges = ["0.0.0.0/0"]
-}
