@@ -11,8 +11,8 @@ resource "google_compute_network" "vpcdocker" {
 
 
 module "subnet1" {
-  source = "./modules/vpc"
-  name   = "vpc-1"
+  source = "./modules/subnet"
+  network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.10.0/24"
   cidrdock   = "192.168.100.0/24"
   iap_firewall_name     = "iap-ssh-vpc1"
@@ -22,8 +22,8 @@ module "subnet1" {
 }
 
 module "subnet2" {
-  source = "./modules/vpc"
-  name   = "vpc-2"
+  source = "./modules/subnet"
+   network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.20.0/24"
   cidrdock   = "192.168.200.0/24"
   iap_firewall_name     = "iap-ssh-vpc2"
