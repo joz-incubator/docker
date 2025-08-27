@@ -4,6 +4,12 @@ provider "google" {
   region  = var.region
 }
 
+resource "google_compute_network" "vpc" {
+  name                    = var.name
+  auto_create_subnetworks = false
+}
+
+
 module "vpc1" {
   source = "./modules/vpc"
   name   = "vpc-1"
