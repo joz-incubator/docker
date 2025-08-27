@@ -32,7 +32,7 @@ resource "google_compute_instance" "vm" {
 }
 
 resource "google_compute_firewall" "iap_ssh" {
-  name    = "allow-iap-ssh"
+  name    = var.iap_firewall_name
   network = var.network_name
 
   allow {
@@ -45,7 +45,7 @@ resource "google_compute_firewall" "iap_ssh" {
 }
 
 resource "google_compute_firewall" "egress443" {
-  name    = "allow-egress2-443"
+  name    = var.egress_firewall_name
   network = var.network_name
 
   direction = "EGRESS"
