@@ -18,3 +18,7 @@ variable "cidrdock" {
   type = string
 }
 
+variable "dock_range_name" {
+  type = string
+}
+
