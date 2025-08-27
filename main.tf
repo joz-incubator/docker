@@ -9,6 +9,7 @@ module "vpc1" {
   name   = "vpc-1"
   cidr   = "10.0.10.0/24"
   cidrdock   = "192.168.100.0/24"
+  region = var.region
 }
 
 module "vpc2" {
@@ -16,6 +17,7 @@ module "vpc2" {
   name   = "vpc-2"
   cidr   = "10.0.20.0/24"
   cidrdock   = "192.168.200.0/24"
+  region = var.region
 }
 
 module "vm1" {
