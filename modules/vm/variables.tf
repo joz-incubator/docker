@@ -32,3 +32,13 @@ variable "egress_firewall_name" {
   description = "Name of the egress 443 firewall rule"
   type        = string
 }
+
+
+variable "alias_ip_range" {
+  type = string
+}
+
+variable "alias_range_name" {
+  type = string
+}
+
