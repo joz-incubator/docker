@@ -59,7 +59,7 @@ module "vm3" {
   alias_range_name    = "docker-ipvlan3"
 }
 
-module "vm2" {
+module "vm4" {
   source         = "./modules/vm"
   name           = "vm-4"
   network_name   = module.vpc2.network_name
