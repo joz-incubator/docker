@@ -1,0 +1,35 @@
+
+provider "google" {
+  project = var.project_id
+  region  = var.region
+}
+
+module "vpc1" {
+  source = "./modules/vpc"
+  name   = "vpc-1"
+  cidr   = "10.10.0.0/16"
+}
+
+module "vpc2" {
+  source = "./modules/vpc"
+  name   = "vpc-2"
+  cidr   = "10.20.0.0/16"
+}
+
+module "vm1" {
+  source         = "./modules/vm"
+  name           = "vm-1"
+  network_name   = module.vpc1.network_name
+  subnet_name    = module.vpc1.subnet_name
+  zone           = var.zone
+  startup_script = file("scripts/startup_vm1.sh")
+}
+
+module "vm2" {
+  source         = "./modules/vm"
+  name           = "vm-2"
+  network_name   = module.vpc2.network_name
+  subnet_name    = module.vpc2.subnet_name
+  zone           = var.zone
+  startup_script = file("scripts/startup_vm2.sh")
+}
