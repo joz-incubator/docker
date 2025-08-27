@@ -9,6 +9,8 @@ module "vpc1" {
   name   = "vpc-1"
   cidr   = "10.0.10.0/24"
   cidrdock   = "192.168.100.0/24"
+  iap_firewall_name     = "iap-ssh-vpc1"
+  egress_firewall_name  = "egress-443-vpc1"
   region = var.region
   dock_range_name = "docker-ipvlan1"
 }
@@ -18,6 +20,8 @@ module "vpc2" {
   name   = "vpc-2"
   cidr   = "10.0.20.0/24"
   cidrdock   = "192.168.200.0/24"
+  iap_firewall_name     = "iap-ssh-vpc2"
+  egress_firewall_name  = "egress-443-vpc2"
   region = var.region
   dock_range_name = "docker-ipvlan2"
 }
@@ -29,8 +33,6 @@ module "vm1" {
   subnet_name    = module.vpc1.subnet_name
   zone           = var.zone
   startup_script = file("scripts/startup_vm1.sh")
-  iap_firewall_name     = "iap-ssh-vpc1"
-  egress_firewall_name  = "egress-443-vpc1"
   alias_ip_range      = "192.168.100.0/24"
   alias_range_name    = "docker-ipvlan1"
 }
@@ -42,8 +44,6 @@ module "vm2" {
   subnet_name    = module.vpc2.subnet_name
   zone           = var.zone
   startup_script = file("scripts/startup_vm2.sh")
-  iap_firewall_name     = "iap-ssh-vpc2"
-  egress_firewall_name  = "egress-443-vpc2"
   alias_ip_range      = "192.168.200.0/24"
   alias_range_name    = "docker-ipvlan2"
 }
