@@ -31,6 +31,38 @@ resource "google_compute_firewall" "egress443" {
   destination_ranges = ["0.0.0.0/0"]
 }
 
+resource "google_compute_firewall" "allow_icmp_internal" {
+  name    = "allow-icmp-internal"
+  network = google_compute_network.vpcdocker.self_link
+
+  direction   = "INGRESS"
+  priority    = 1000
+  description = "Allow ICMP between subnets"
+
+  source_ranges = ["10.0.0.0/8"]
+  target_tags   = ["docker-host"]
+
+  allow {
+    protocol = "icmp"
+  }
+}
+
+resource "google_compute_firewall" "allow_tcp_80_443_internal" {
+  name    = "allow-tcp-80-443-internal"
+  network = google_compute_network.vpcdocker.self_link
+
+  direction   = "INGRESS"
+  priority    = 1000
+  description = "Allow TCP ports 80 and 443 between subnets"
+
+  source_ranges = ["10.0.0.0/8"]
+  target_tags   = ["docker-host"]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+}
 
 resource "google_compute_router" "router" {
   name    = "docker-router"
