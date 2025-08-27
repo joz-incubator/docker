@@ -23,6 +23,8 @@ module "vm1" {
   subnet_name    = module.vpc1.subnet_name
   zone           = var.zone
   startup_script = file("scripts/startup_vm1.sh")
+  iap_firewall_name     = "iap-ssh-vpc1"
+  egress_firewall_name  = "egress-443-vpc1"
 }
 
 module "vm2" {
@@ -32,4 +34,7 @@ module "vm2" {
   subnet_name    = module.vpc2.subnet_name
   zone           = var.zone
   startup_script = file("scripts/startup_vm2.sh")
+  iap_firewall_name     = "iap-ssh-vpc2"
+  egress_firewall_name  = "egress-443-vpc2"
+
 }
