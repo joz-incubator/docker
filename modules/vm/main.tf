@@ -3,8 +3,7 @@ resource "google_compute_instance" "vm" {
   name         = var.name
   machine_type = "e2-medium"
   zone         = var.zone
-  tags = ["docker-host"]
-  tags = ["iap-ssh"]
+  tags = ["docker-host", "iap-ssh"]
 
   boot_disk {
     initialize_params {
