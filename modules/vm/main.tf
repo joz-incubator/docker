@@ -19,7 +19,13 @@ resource "google_compute_instance" "vm" {
   network_interface {
     network    = var.network_name
     subnetwork = var.subnet_name
-    access_config {}
+ #   access_config {}
+
+    alias_ip_range {
+      ip_cidr_range         = var.alias_ip_range
+      subnetwork_range_name = var.alias_range_name
+    }
+
   }
 
   metadata_startup_script = var.startup_script
