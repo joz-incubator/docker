@@ -5,12 +5,12 @@ provider "google" {
 }
 
 resource "google_compute_network" "vpcdocker" {
-  name                    = "main-vpc"
+  name                    = "docker-vpc"
   auto_create_subnetworks = false
 }
 
 resource "google_compute_firewall" "iap_ssh" {
-  name    = "iap-ssh-vpc"
+  name    = "docker-iap"
   network = google_compute_network.vpcdocker.self_link
   allow {
     protocol = "tcp"
@@ -21,7 +21,7 @@ resource "google_compute_firewall" "iap_ssh" {
 }
 
 resource "google_compute_firewall" "egress443" {
-  name    = "egress-443-vpc"
+  name    = "docker-egress443"
   network = google_compute_network.vpcdocker.self_link
   direction = "EGRESS"
   allow {
@@ -32,7 +32,7 @@ resource "google_compute_firewall" "egress443" {
 }
 
 resource "google_compute_firewall" "allow_icmp_internal" {
-  name    = "allow-icmp-internal"
+  name    = "docker-allow-icmp"
   network = google_compute_network.vpcdocker.self_link
 
   direction   = "INGRESS"
@@ -48,7 +48,7 @@ resource "google_compute_firewall" "allow_icmp_internal" {
 }
 
 resource "google_compute_firewall" "allow_tcp_80_443_internal" {
-  name    = "allow-tcp-80-443-internal"
+  name    = "docker-allowinternal"
   network = google_compute_network.vpcdocker.self_link
 
   direction   = "INGRESS"
@@ -90,7 +90,7 @@ resource "google_compute_router_nat" "nat" {
 
 module "subnet1" {
   source = "./modules/subnet"
-  name = "subnet1"
+  name = "docker-subnet1"
   network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.10.0/24"
   cidrdock   = "192.168.100.0/24"
@@ -100,7 +100,7 @@ module "subnet1" {
 
 module "subnet2" {
   source = "./modules/subnet"
-  name = "subnet2"
+  name = "docker-subnet2"
   network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.20.0/24"
   cidrdock   = "192.168.200.0/24"
@@ -110,7 +110,7 @@ module "subnet2" {
 
 module "vm1" {
   source         = "./modules/vm"
-  name           = "vm-1"
+  name           = "docker-vm-1"
   network_name = google_compute_network.vpcdocker.name
   subnet_name  = module.subnet1.subnet_name
   zone           = var.zone
@@ -121,7 +121,7 @@ module "vm1" {
 
 module "vm2" {
   source         = "./modules/vm"
-  name           = "vm-2"
+  name           = "docker-vm-2"
   network_name = google_compute_network.vpcdocker.name
   subnet_name  = module.subnet2.subnet_name
   zone           = var.zone
