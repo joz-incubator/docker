@@ -4,19 +4,19 @@ resource "google_compute_network" "vpc" {
   auto_create_subnetworks = false
 }
 
+
 resource "google_compute_subnetwork" "subnet" {
   name          = "${var.name}-subnet"
   ip_cidr_range = var.cidr
-  network       = google_compute_network.vpc.id
   region        = var.region
+  network       = google_compute_network.vpc.id
+
+  secondary_ip_range {
+    range_name    = "docker-ipvlan-range"
+    ip_cidr_range = var.cidrdock
+  }
 }
 
-resource "google_compute_subnetwork" "subnetdock" {
-  name          = "${var.name}-subnetdock"
-  ip_cidr_range = var.cidrdock
-  network       = google_compute_network.vpc.id
-  region        = var.region
-}
 
 resource "google_compute_router" "router" {
   name    = "${var.name}-router"
