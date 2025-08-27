@@ -33,13 +33,13 @@ resource "google_compute_firewall" "egress443" {
 
 
 resource "google_compute_router" "router" {
-  name    = "${var.name}-router"
-  network = var.network_self_link
+  name    = "docker-router"
+  network = google_compute_network.vpcdocker.self_link
   region  = var.region
 }
 
 resource "google_compute_router_nat" "nat" {
-  name                               = "${var.name}-nat"
+  name                               = "docker-nat"
   router                             = google_compute_router.router.name
   region                             = var.region
   nat_ip_allocate_option             = "AUTO_ONLY"
