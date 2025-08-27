@@ -10,7 +10,7 @@ resource "google_compute_network" "vpc" {
 }
 
 
-module "vpc1" {
+module "subnet1" {
   source = "./modules/vpc"
   name   = "vpc-1"
   cidr   = "10.0.10.0/24"
@@ -21,7 +21,7 @@ module "vpc1" {
   dock_range_name = "docker-ipvlan1"
 }
 
-module "vpc2" {
+module "subnet2" {
   source = "./modules/vpc"
   name   = "vpc-2"
   cidr   = "10.0.20.0/24"
