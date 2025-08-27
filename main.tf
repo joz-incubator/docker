@@ -29,6 +29,9 @@ module "vm1" {
   startup_script = file("scripts/startup_vm1.sh")
   iap_firewall_name     = "iap-ssh-vpc1"
   egress_firewall_name  = "egress-443-vpc1"
+  alias_ip_range      = "192.168.100.0/24"
+  alias_range_name    = "docker-ipvlan-range"
+
 }
 
 module "vm2" {
@@ -40,5 +43,7 @@ module "vm2" {
   startup_script = file("scripts/startup_vm2.sh")
   iap_firewall_name     = "iap-ssh-vpc2"
   egress_firewall_name  = "egress-443-vpc2"
+  alias_ip_range      = "192.168.200.0/24"
+  alias_range_name    = "docker-ipvlan-range"
 
 }
