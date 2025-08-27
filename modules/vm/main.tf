@@ -10,6 +10,12 @@ resource "google_compute_instance" "vm" {
     }
   }
 
+    shielded_instance_config {
+      enable_integrity_monitoring = true
+      enable_secure_boot          = true
+      enable_vtpm                 = true
+  }
+
   network_interface {
     network    = var.network_name
     subnetwork = var.subnet_name
