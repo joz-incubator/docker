@@ -23,15 +23,6 @@ variable "startup_script" {
   type        = string
 }
 
-variable "iap_firewall_name" {
-  description = "Name of the IAP SSH firewall rule"
-  type        = string
-}
-
-variable "egress_firewall_name" {
-  description = "Name of the egress 443 firewall rule"
-  type        = string
-}
 
 
 variable "alias_ip_range" {
