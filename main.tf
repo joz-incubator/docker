@@ -48,24 +48,3 @@ module "vm2" {
   alias_range_name    = "docker-ipvlan2"
 }
 
-module "vm3" {
-  source         = "./modules/vm"
-  name           = "vm-3"
-  network_name   = module.vpc1.network_name
-  subnet_name    = module.vpc1.subnet_name
-  zone           = var.zone
-  startup_script = file("scripts/startup_vm3.sh")
-  alias_ip_range      = "192.168.300.0/24"
-  alias_range_name    = "docker-ipvlan3"
-}
-
-module "vm4" {
-  source         = "./modules/vm"
-  name           = "vm-4"
-  network_name   = module.vpc2.network_name
-  subnet_name    = module.vpc2.subnet_name
-  zone           = var.zone
-  startup_script = file("scripts/startup_vm4.sh")
-  alias_ip_range      = "192.168.400.0/24"
-  alias_range_name    = "docker-ipvlan4"
-}
