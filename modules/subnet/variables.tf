@@ -22,3 +22,7 @@ variable "dock_range_name" {
   type = string
 }
 
+
+variable "network_self_link" {
+  type = string
+}
