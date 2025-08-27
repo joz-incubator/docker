@@ -30,7 +30,7 @@ module "vm1" {
   iap_firewall_name     = "iap-ssh-vpc1"
   egress_firewall_name  = "egress-443-vpc1"
   alias_ip_range      = "192.168.100.0/24"
-  alias_range_name    = "docker-ipvlan-range"
+  alias_range_name    = "docker-ipvlan1"
 
 }
 
@@ -44,6 +44,6 @@ module "vm2" {
   iap_firewall_name     = "iap-ssh-vpc2"
   egress_firewall_name  = "egress-443-vpc2"
   alias_ip_range      = "192.168.200.0/24"
-  alias_range_name    = "docker-ipvlan-range"
+  alias_range_name    = "docker-ipvlan2"
 
 }
