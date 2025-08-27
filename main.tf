@@ -5,7 +5,7 @@ provider "google" {
 }
 
 resource "google_compute_network" "vpcdocker" {
-  name                    = var.name
+  name                    = "main-vpc"
   auto_create_subnetworks = false
 }
 
