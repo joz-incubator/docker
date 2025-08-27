@@ -11,6 +11,13 @@ resource "google_compute_subnetwork" "subnet" {
   region        = var.region
 }
 
+resource "google_compute_subnetwork" "subnetdock" {
+  name          = "${var.name}-subnetdock"
+  ip_cidr_range = var.cidrdock
+  network       = google_compute_network.vpc.id
+  region        = var.region
+}
+
 resource "google_compute_router" "router" {
   name    = "${var.name}-router"
   network = google_compute_network.vpc.name
