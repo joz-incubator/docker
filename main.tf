@@ -4,7 +4,7 @@ provider "google" {
   region  = var.region
 }
 
-resource "google_compute_network" "vpc" {
+resource "google_compute_network" "vpcdocker" {
   name                    = var.name
   auto_create_subnetworks = false
 }
