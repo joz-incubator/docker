@@ -8,12 +8,14 @@ module "vpc1" {
   source = "./modules/vpc"
   name   = "vpc-1"
   cidr   = "10.10.0.0/16"
+  cidrdock   = "192.168.100.0/24"
 }
 
 module "vpc2" {
   source = "./modules/vpc"
   name   = "vpc-2"
   cidr   = "10.20.0.0/16"
+  cidrdock   = "192.168.200.0/24"
 }
 
 module "vm1" {
