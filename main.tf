@@ -9,14 +9,33 @@ resource "google_compute_network" "vpcdocker" {
   auto_create_subnetworks = false
 }
 
+resource "google_compute_firewall" "iap_ssh" {
+  name    = "iap-ssh-vpc"
+  network_self_link = google_compute_network.vpcdocker.self_link
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+  source_ranges = ["35.235.240.0/20"]
+  target_tags   = ["iap-ssh"]
+}
+
+resource "google_compute_firewall" "egress443" {
+  name    = egress-443-vpc
+  network_self_link = google_compute_network.vpcdocker.self_link
+  direction = "EGRESS"
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+  destination_ranges = ["0.0.0.0/0"]
+}
 
 module "subnet1" {
   source = "./modules/subnet"
   network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.10.0/24"
   cidrdock   = "192.168.100.0/24"
-  iap_firewall_name     = "iap-ssh-vpc1"
-  egress_firewall_name  = "egress-443-vpc1"
   region = var.region
   dock_range_name = "docker-ipvlan1"
 }
@@ -26,8 +45,6 @@ module "subnet2" {
    network_self_link = google_compute_network.vpcdocker.self_link
   cidr   = "10.0.20.0/24"
   cidrdock   = "192.168.200.0/24"
-  iap_firewall_name     = "iap-ssh-vpc2"
-  egress_firewall_name  = "egress-443-vpc2"
   region = var.region
   dock_range_name = "docker-ipvlan2"
 }
