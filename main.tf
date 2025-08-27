@@ -11,7 +11,7 @@ resource "google_compute_network" "vpcdocker" {
 
 resource "google_compute_firewall" "iap_ssh" {
   name    = "iap-ssh-vpc"
-  network_self_link = google_compute_network.vpcdocker.self_link
+  network = google_compute_network.vpcdocker.self_link
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -22,7 +22,7 @@ resource "google_compute_firewall" "iap_ssh" {
 
 resource "google_compute_firewall" "egress443" {
   name    = "egress-443-vpc"
-  network_self_link = google_compute_network.vpcdocker.self_link
+  network = google_compute_network.vpcdocker.self_link
   direction = "EGRESS"
   allow {
     protocol = "tcp"
