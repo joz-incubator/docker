@@ -10,6 +10,7 @@ module "vpc1" {
   cidr   = "10.0.10.0/24"
   cidrdock   = "192.168.100.0/24"
   region = var.region
+  dock_range_name = "docker-ipvlan1"
 }
 
 module "vpc2" {
@@ -18,6 +19,7 @@ module "vpc2" {
   cidr   = "10.0.20.0/24"
   cidrdock   = "192.168.200.0/24"
   region = var.region
+  dock_range_name = "docker-ipvlan2"
 }
 
 module "vm1" {
