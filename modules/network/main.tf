@@ -57,3 +57,4 @@ resource "google_compute_subnetwork" "subnet" {
     range_name    = "docker-ipvlan"
     ip_cidr_range = "192.168.0.0/16"
   }
+}
