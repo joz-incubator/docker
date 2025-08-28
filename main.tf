@@ -82,7 +82,7 @@ module "vm2" {
   source         = "./modules/vm"
   name           = "docker-vm-2"
   network_name = google_compute_network.vpcdocker.name
-  subnet_name  = google_compute_network.subnet.name
+  subnet_name  = google_compute_subnetwork.subnet.name
   zone           = var.zone
   startup_script = file("scripts/startup_vm2.sh")
   alias_ip_range      = "192.168.200.0/24"
