@@ -54,7 +54,7 @@ resource "google_compute_subnetwork" "subnet" {
   network       = google_compute_network.vpcdocker.self_link
 
   secondary_ip_range {
-    range_name    = "docker-ipvlan"
+    range_name    = var.secondary_range_name
     ip_cidr_range = "192.168.0.0/16"
   }
 }
