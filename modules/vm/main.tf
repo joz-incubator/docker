@@ -4,6 +4,7 @@ resource "google_compute_instance" "vm" {
   machine_type = "e2-medium"
   zone         = var.zone
   tags = ["docker-host", "iap-ssh"]
+  can_ip_forward = true  # Enables IP forwarding
 
   boot_disk {
     initialize_params {
