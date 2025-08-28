@@ -15,3 +15,9 @@ variable "zone" {
   type        = string
   default     = "europe-west6-a"
 }
+
+variable "secondary_range_name" {
+  description = "Name of the secondary IP range used for alias IPs"
+  type        = string
+  default     = "docker-ipvlan"
+}
