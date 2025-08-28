@@ -25,7 +25,6 @@ resource "google_compute_firewall" "egress443" {
   destination_ranges = ["0.0.0.0/0"]
 }
 
-
 resource "google_compute_router" "router" {
   name    = "docker-router"
   network = google_compute_network.vpcdocker.self_link
@@ -40,7 +39,6 @@ resource "google_compute_router_nat" "nat" {
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 
   enable_endpoint_independent_mapping = true
-
   min_ports_per_vm = 64
 
   log_config {
@@ -53,10 +51,9 @@ resource "google_compute_subnetwork" "subnet" {
   name          = "docker-subnet"
   ip_cidr_range = "10.0.10.0/24"
   region        = var.region
-  network = google_compute_network.vpcdocker.self_link
+  network       = google_compute_network.vpcdocker.self_link
 
   secondary_ip_range {
     range_name    = "docker-ipvlan"
     ip_cidr_range = "192.168.0.0/16"
   }
-}
