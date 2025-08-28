@@ -31,38 +31,6 @@ resource "google_compute_firewall" "egress443" {
   destination_ranges = ["0.0.0.0/0"]
 }
 
-resource "google_compute_firewall" "allow_icmp_internal" {
-  name    = "docker-allow-icmp"
-  network = google_compute_network.vpcdocker.self_link
-
-  direction   = "INGRESS"
-  priority    = 1000
-  description = "Allow ICMP between subnets"
-
-  source_ranges = ["10.0.0.0/8", "192.168.0.0/16"]
-  target_tags   = ["docker-host"]
-
-  allow {
-    protocol = "icmp"
-  }
-}
-
-resource "google_compute_firewall" "allow_tcp_80_443_internal" {
-  name    = "docker-allowinternal"
-  network = google_compute_network.vpcdocker.self_link
-
-  direction   = "INGRESS"
-  priority    = 1000
-  description = "Allow TCP ports 80 and 443 between subnets"
-
-  source_ranges = ["10.0.0.0/8", "192.168.0.0/16"]
-  target_tags   = ["docker-host"]
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
-}
 
 resource "google_compute_router" "router" {
   name    = "docker-router"
@@ -87,46 +55,37 @@ resource "google_compute_router_nat" "nat" {
   }
 }
 
+resource "google_compute_subnetwork" "subnet" {
+  name          = "docker-subnet"
+  ip_cidr_range = "10.0.10.0/24"
+  region        = var.region
+  network = google_compute_network.vpcdocker.self_link
 
-module "subnet1" {
-  source = "./modules/subnet"
-  name = "docker-subnet1"
-  network_self_link = google_compute_network.vpcdocker.self_link
-  cidr   = "10.0.10.0/24"
-  cidrdock   = "192.168.100.0/24"
-  region = var.region
-  dock_range_name = "docker-ipvlan1"
-}
-
-module "subnet2" {
-  source = "./modules/subnet"
-  name = "docker-subnet2"
-  network_self_link = google_compute_network.vpcdocker.self_link
-  cidr   = "10.0.20.0/24"
-  cidrdock   = "192.168.200.0/24"
-  region = var.region
-  dock_range_name = "docker-ipvlan2"
+  secondary_ip_range {
+    range_name    = "docker-ipvlan"
+    ip_cidr_range = "192.168.0.0/16"
+  }
 }
 
 module "vm1" {
   source         = "./modules/vm"
   name           = "docker-vm-1"
   network_name = google_compute_network.vpcdocker.name
-  subnet_name  = module.subnet1.subnet_name
+  subnet_name  = google_compute_network.subnet.name
   zone           = var.zone
   startup_script = file("scripts/startup_vm1.sh")
   alias_ip_range      = "192.168.100.0/24"
-  alias_range_name    = "docker-ipvlan1"
+  alias_range_name    = "docker-ipvlan100"
 }
 
 module "vm2" {
   source         = "./modules/vm"
   name           = "docker-vm-2"
   network_name = google_compute_network.vpcdocker.name
-  subnet_name  = module.subnet2.subnet_name
+  subnet_name  = google_compute_network.subnet.name
   zone           = var.zone
   startup_script = file("scripts/startup_vm2.sh")
   alias_ip_range      = "192.168.200.0/24"
-  alias_range_name    = "docker-ipvlan2"
+  alias_range_name    = "docker-ipvlan200"
 }
 
