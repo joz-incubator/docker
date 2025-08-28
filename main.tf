@@ -71,7 +71,7 @@ module "vm1" {
   source         = "./modules/vm"
   name           = "docker-vm-1"
   network_name = google_compute_network.vpcdocker.name
-  subnet_name  = google_compute_network.subnet.name
+  subnet_name  = google_compute_subnetwork.subnet.name
   zone           = var.zone
   startup_script = file("scripts/startup_vm1.sh")
   alias_ip_range      = "192.168.100.0/24"
