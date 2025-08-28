@@ -1,13 +1,13 @@
-
 provider "google" {
   project = var.project_id
   region  = var.region
 }
 
 module "network" {
-  source     = "./modules/network"
-  project_id = var.project_id
-  region     = var.region
+  source               = "./modules/network"
+  project_id           = var.project_id
+  region               = var.region
+  secondary_range_name = var.secondary_range_name
 }
 
 module "vm1" {
@@ -18,7 +18,7 @@ module "vm1" {
   zone               = var.zone
   startup_script     = file("scripts/startup_vm1.sh")
   alias_ip_range     = "192.168.100.0/24"
-  alias_range_name   = "docker-ipvlan100"
+  alias_range_name   = var.secondary_range_name
 }
 
 module "vm2" {
@@ -29,5 +29,5 @@ module "vm2" {
   zone               = var.zone
   startup_script     = file("scripts/startup_vm2.sh")
   alias_ip_range     = "192.168.200.0/24"
-  alias_range_name   = "docker-ipvlan200"
+  alias_range_name   = var.secondary_range_name
 }
